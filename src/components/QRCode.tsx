@@ -38,7 +38,7 @@ export default function QRCode({url}:Props) {
   return (
     <div className="App">
       <div style={styles.inputWrapper}>
-        <p>{url}</p>
+        <a target="_blank" href={url}>{url}</a>
         
       </div>
       <div ref={ref} />

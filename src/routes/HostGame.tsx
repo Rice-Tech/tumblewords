@@ -8,7 +8,7 @@ const HostGame = () => {
   return (
     <>
       <div>HostGame</div>
-      <QRCode url={window.location.href+"/"+"player"} />
+      <QRCode url={window.location.href+"/"+"play"} />
     </>
   );
 };

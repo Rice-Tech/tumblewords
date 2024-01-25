@@ -24,11 +24,11 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: "/game/host/:gameId",
+        path: "/game/:gameId",
         element: <HostGame />,
       },
       {
-        path: "/game/play/:gameId",
+        path: "/game/:gameId/play",
         element: <PlayGame/>
       },
     ],
