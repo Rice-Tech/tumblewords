@@ -6,6 +6,8 @@ import "./index.css";
 import ErrorPage from "./error-page";
 import Home from "./routes/Home";
 import About from "./routes/About";
+import HostGame from "./routes/HostGame";
+import PlayGame from "./routes/PlayGame";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/game/host/:gameId",
+        element: <HostGame />,
+      },
+      {
+        path: "/game/play/:gameId",
+        element: <PlayGame/>
       },
     ],
   },
