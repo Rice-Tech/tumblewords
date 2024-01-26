@@ -1,6 +1,7 @@
 
 import QRCode from "../components/QRCode";
 
+
 const HostGame = () => {
   return (
     <>
