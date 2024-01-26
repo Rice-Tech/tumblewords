@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
 
 const qrCode = new QRCodeStyling({
@@ -24,6 +24,9 @@ export default function QRCode({url}:Props) {
   const ref = useRef(null);
 
   useEffect(() => {
+    if(!ref.current){
+        return
+    }
     qrCode.append(ref.current);
   }, []);
 
