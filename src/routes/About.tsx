@@ -1,4 +1,5 @@
 import { useState } from "react";
+import App from "../App";
 
 const About = () => {
     const [miniGameNumber, setMiniGameNumber] = useState("");
@@ -6,7 +7,7 @@ const About = () => {
   return (
   <div>About
     <input onChange={event => setMiniGameNumber(event.target.value)}></input>
-    {miniGameNumber === "game1" && <h2>Mini Game 1</h2>}
+    {miniGameNumber === "game1" && <App/>}
     {miniGameNumber === "game2" && <h2>Mini Game 2</h2>}
   </div>);
 };
