@@ -1,6 +1,7 @@
 import { useState } from "react";
 import App from "../App";
 import PaintBrush from "../components/PaintBrush";
+import RelatedWords from "../components/RelatedWords";
 
 const About = () => {
   const [miniGameNumber, setMiniGameNumber] = useState("");
@@ -158,17 +159,19 @@ const About = () => {
   return (
     <div>
       About
+      <RelatedWords />
       <select onChange={(event) => setColor(event.target.value)}>
         {cssColors.map((item) => (
           <option key={item}>{item}</option>
         ))}
       </select>
-      <PaintBrush color={color}/>
+      <PaintBrush color={color} />
       <input
         onChange={(event) => setMiniGameNumber(event.target.value)}
       ></input>
       {miniGameNumber === "game1" && <App />}
       {miniGameNumber === "game2" && <h2>Mini Game 2</h2>}
+      {miniGameNumber === "words" && <RelatedWords />}
     </div>
   );
 };
