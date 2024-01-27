@@ -1,7 +1,9 @@
 // src/WordList.js
 import { useState, useEffect } from "react";
+import { en } from "naughty-words";
+import badwords from "./badwords.json";
 
-type dataMuseResponse = [{ word: string; score: number; tags: string[] }] | [];
+type dataMuseResponse = { word: string; score: number; tags: string[] }[];
 
 const RelatedWords = () => {
   const [words, setWords] = useState<dataMuseResponse>([]);
@@ -17,8 +19,13 @@ const RelatedWords = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
-      const data = await response.json();
-      setWords(data);
+      const data: dataMuseResponse = await response.json();
+      // Filter out obscene words
+      const filteredWords = data
+        .filter((word) => !en.includes(word.word))
+        ?.filter((word) => !badwords.includes(word.word));
+
+      setWords(filteredWords);
     };
 
     fetchData();
@@ -40,7 +47,7 @@ const RelatedWords = () => {
           words.map((word, index) => (
             <li key={index}>
               {word.word} ({" "}
-              {word.tags.length > 0 &&
+              {word.tags && word.tags.length > 0 &&
                 word.tags.map((tag) => <span key={tag}>{tag} </span>)}
               )
             </li>
