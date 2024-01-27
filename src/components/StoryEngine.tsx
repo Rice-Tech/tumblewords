@@ -1,30 +1,34 @@
 import { useState, useEffect } from "react";
 import StoryTemplate from "./StoryTemplate";
+import WordInputs from "./WordInputs";
 
 interface Props {
   templateProp: string;
+  wordsList:WordInput[]
 }
+
 export interface WordInput {
   word: string;
   partOfSpeech: string;
 }
 
-const StoryEngine = ({ templateProp }: Props) => {
+export const parseTemplate = (template: string): WordInput[] => {
+  const regex = /\{(\w+)\}/g;
+  const matches = template.match(regex);
+  if (matches) {
+    return matches.map((match, index) => {
+      const partOfSpeech = match.substring(1, match.length - 1); // Remove curly braces
+      return { word: "", partOfSpeech: partOfSpeech, index: index };
+    });
+  }
+  return [];
+};
+
+const StoryEngine = ({ templateProp, wordsList }: Props) => {
   const [template /*, setTemplate*/] = useState<string>(templateProp);
-  const [wordInputs, setWordInputs] = useState<WordInput[]>([]);
+  const [wordInputs, setWordInputs] = useState<WordInput[]>(wordsList);
   const [revealIndex, setRevealIndex] = useState(0);
   const [showStory, setShowStory] = useState(false);
-  const parseTemplate = (template: string): WordInput[] => {
-    const regex = /\{(\w+)\}/g;
-    const matches = template.match(regex);
-    if (matches) {
-      return matches.map((match, index) => {
-        const partOfSpeech = match.substring(1, match.length - 1); // Remove curly braces
-        return { word: "", partOfSpeech: partOfSpeech, index: index };
-      });
-    }
-    return [];
-  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -41,19 +45,7 @@ const StoryEngine = ({ templateProp }: Props) => {
 
   return (
     <div>
-      {wordInputs.map((input, index) => (
-        <div key={index}>
-          <label>
-            {input.partOfSpeech}:
-            <input
-              type="text"
-              value={input.word}
-              onChange={(e) => handleInputChange(e, index)}
-            />
-          </label>
-          <br />
-        </div>
-      ))}
+      <WordInputs wordsList={wordInputs} onChange={handleInputChange}/>
       <button id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
         {showStory ? "Hide the Story" : "Reveal the Story"}
       </button>

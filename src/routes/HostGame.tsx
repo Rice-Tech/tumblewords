@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
-import StoryEngine from "../components/StoryEngine";
+import StoryEngine, { WordInput } from "../components/StoryEngine";
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -18,6 +18,7 @@ const HostGame = () => {
   const params = useParams();
   const [users, setUsers] = useState<string[]>([]);
   const [gameStatus, setGameStatus] = useState("join");
+  const [wordsList, setWordsList] = useState<WordInput[]>([]);
   const { currentUser } = useAuth();
   useEffect(() => {
     if (!currentUser) {
@@ -37,8 +38,27 @@ const HostGame = () => {
       return unsubscribe;
     };
 
-    const unsubscribe = watchUsers();
-    return unsubscribe;
+    const watchWords = () => {
+      const ref = `rooms/${params.gameId}/words`;
+      const q = query(collection(db, ref), where("word", "!=", ""));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const wordSnaps: WordInput[] = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          wordSnaps.push({ word: data.word, partOfSpeech: data.partOfSpeech });
+        });
+        setWordsList(wordSnaps);
+      });
+      return unsubscribe;
+    };
+
+    const unsubscribeUsers = watchUsers();
+    const unsubscribeWords = watchWords();
+
+    return () => {
+      unsubscribeUsers();
+      unsubscribeWords();
+    };
   }, [currentUser]);
 
   const handleStartGame = async () => {
@@ -88,6 +108,7 @@ const HostGame = () => {
       {gameStatus === "play" && (
         <StoryEngine
           templateProp={madlib[1].template || "Error Loading Template"}
+          wordsList={wordsList}
         />
       )}
     </>
