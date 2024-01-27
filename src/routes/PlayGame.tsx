@@ -13,6 +13,13 @@ import { useAuth } from "../contexts/AuthContext";
 import { WordInput } from "../components/StoryEngine";
 import WordInputs from "../components/WordInputs";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const PlayGame = () => {
   const params = useParams();
@@ -83,9 +90,19 @@ const PlayGame = () => {
   };
   return (
     <div>
-      PlayGame {params.gameId}
-      <WordInputs wordsList={wordAssignments} onChange={handleInputChange} />
-      <Button onClick={handleSubmitWords}>Submit words</Button>
+      <Card className=" m-auto  w-1/2">
+        <CardHeader>
+          <CardTitle>Play Game</CardTitle>
+          <CardDescription>ID: {params.gameId}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <WordInputs
+            wordsList={wordAssignments}
+            onChange={handleInputChange}
+          />
+          <Button onClick={handleSubmitWords}>Submit words</Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };

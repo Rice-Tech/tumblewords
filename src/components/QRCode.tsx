@@ -1,63 +1,60 @@
 import { useEffect, useRef } from "react";
 import QRCodeStyling from "qr-code-styling";
+import { Button } from "./ui/button";
 
 const qrCode = new QRCodeStyling({
   width: 300,
   height: 300,
-  image:
-    "../TumbleWorksLogo.svg",
+  image: "../TumbleWorksLogo.svg",
   dotsOptions: {
-    color: "#4267b2",
-    type: "rounded"
+    color: "#slate",
+    type: "rounded",
   },
   imageOptions: {
     crossOrigin: "anonymous",
-    margin: 20
-  }
+    margin: 20,
+  },
 });
 
-interface Props{
-    url: string;
+interface Props {
+  url: string;
 }
-export default function QRCode({url}:Props) {
-  
-  const ref = useRef(null);
+export default function QRCode({ url }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if(!ref.current){
-        return
+    if (!ref.current) {
+      return;
     }
     qrCode.append(ref.current);
+    const codeCanvas = ref.current.querySelector("canvas")
+    if(!codeCanvas){
+      console.log("No Canvas")
+      return
+    }
+    codeCanvas.setAttribute("width", "");
+    codeCanvas.setAttribute("height", "");
+    codeCanvas.setAttribute("class", "w-full");
   }, []);
 
   useEffect(() => {
     qrCode.update({
-      data: url
+      data: url,
     });
   }, [url]);
 
-
-
   return (
-    <div className="App">
-      <div style={styles.inputWrapper}>
-        <a target="_blank" href={url}>{url}</a>
-        
-      </div>
-      <div ref={ref} />
+    <div className="m-auto flex-col justify-around">
+      <Button className=" m-auto">
+        <a className=" min-w-0" target="_blank" href={url}>
+          {url}
+        </a>
+      </Button>
+      
+
+      <div className=" flex justify-around w-full" ref={ref} />
     </div>
   );
 }
 
-const styles = {
-  inputWrapper: {
-    margin: "20px 0",
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%"
-  },
-  inputBox: {
-    flexGrow: 1,
-    marginRight: 20
-  }
-};
+

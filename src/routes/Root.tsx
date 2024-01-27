@@ -3,7 +3,6 @@ import { AuthProvider } from "../contexts/AuthContext";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
@@ -15,17 +14,13 @@ const Root = () => {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link to={"/"}>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Home
-                </NavigationMenuLink>
+              <Link to={"/"} className={navigationMenuTriggerStyle()}>
+                Home
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to={"/about"}>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  About
-                </NavigationMenuLink>
+              <Link to={"/about"} className={navigationMenuTriggerStyle()}>
+                About
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

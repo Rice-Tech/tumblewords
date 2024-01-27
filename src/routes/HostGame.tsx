@@ -18,7 +18,7 @@ import StoryEngine, {
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const HostGame = () => {
   const params = useParams();
@@ -51,7 +51,11 @@ const HostGame = () => {
         const wordSnaps: WordInput[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          wordSnaps.push({ word: data.word, partOfSpeech: data.partOfSpeech, refPath:doc.ref.path });
+          wordSnaps.push({
+            word: data.word,
+            partOfSpeech: data.partOfSpeech,
+            refPath: doc.ref.path,
+          });
         });
         setWordsList(wordSnaps);
       });
@@ -91,7 +95,7 @@ const HostGame = () => {
 
     updateRoomStatus("play");
     setGameStatus("play");
-    const newWordsList = parseTemplate(madlib[0].template)
+    const newWordsList = parseTemplate(madlib[0].template);
     console.table(newWordsList);
     if (!newWordsList.length) {
       return;
@@ -111,29 +115,55 @@ const HostGame = () => {
 
   return (
     <>
-      <div>HostGame</div>
-      {gameStatus === "join" && (
-        <div className="joinGameDiv">
-          <p>Game ID: {params.gameId}</p>
-          <QRCode url={window.location.href + "/" + "play"} />
-          <h3>Participants</h3>
-          <ul>
-            {users.map((user) => (
-              <li key={user}>{user}</li>
-            ))}
-          </ul>
-          {users.length > 0 && (
-            <Button onClick={handleStartGame}>Start Game</Button>
-          )}
-        </div>
-      )}
+      <div>Hosting Game</div>
+      <div className="flex justify-around">
+        {gameStatus === "join" && (
+          <>
+            <Card className=" w-1/2">
+              <CardHeader>
+                <CardTitle>Join Now!</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="joinGameDiv">
+                  <p>Game ID: {params.gameId}</p>
+                  <QRCode url={window.location.href + "/" + "play"} />
+                </div>
+              </CardContent>
+            </Card>
+            <Card className=" w-1/3">
+              <CardHeader>
+                <CardTitle>Joined Users</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <h3>Participants</h3>
+                <ul>
+                  {users.map((user) => (
+                    <li key={user}>{user}</li>
+                  ))}
+                </ul>
+                {users.length > 0 && (
+                  <Button onClick={handleStartGame}>Start Game</Button>
+                )}
+              </CardContent>
+            </Card>
+          </>
+        )}
 
-      {gameStatus === "play" && (
-        <StoryEngine
-          templateProp={madlib[0].template || "Error Loading Template"}
-          wordsList={wordsList}
-        />
-      )}
+        {gameStatus === "play" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Story</CardTitle>
+              <CardDescription>Players Choose Words and then a story is created here!</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <StoryEngine
+                templateProp={madlib[0].template || "Error Loading Template"}
+                wordsList={wordsList}
+              />
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </>
   );
 };

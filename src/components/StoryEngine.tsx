@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import StoryTemplate from "./StoryTemplate";
 import WordInputs from "./WordInputs";
 import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+
 
 interface Props {
   templateProp: string;
-  wordsList:WordInput[]
+  wordsList: WordInput[];
 }
 
 export interface WordInput {
   word: string;
   partOfSpeech: string;
-  refPath?:string
+  refPath?: string;
 }
 
 export const parseTemplate = (template: string): WordInput[] => {
@@ -47,11 +47,8 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
   }, [template]);
 
   return (
-    <div>
-      <WordInputs wordsList={wordsList} onChange={handleInputChange}/>
-      <Button id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
-        {showStory ? "Hide the Story" : "Reveal the Story"}
-      </Button>
+    <div className=" flex-col">
+      <WordInputs wordsList={wordsList} onChange={handleInputChange} />
 
       {showStory && (
         <>
@@ -61,15 +58,22 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
             revealIndex={revealIndex}
           />{" "}
           <br />
-          <label htmlFor="revealIndexInput"></label>Reveal the Words
+          <Button  className="m-auto" onClick={() => setRevealIndex(revealIndex + 1)}>
+            Reveal Next Word
+          </Button>
+          {/* 
+          <label htmlFor="revealIndexInput">Reveal the Words</label>
           <Input
             id="revealIndexInput"
             type="number"
             value={revealIndex}
             onChange={(event) => setRevealIndex(Number(event.target.value))}
-          ></Input>
+          ></Input> */}
         </>
       )}
+      <Button className="m-auto" id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
+        {showStory ? "Hide the Story" : "Reveal the Story"}
+      </Button>
     </div>
   );
 };
