@@ -46,7 +46,7 @@ const StoryTemplate = ({ templateProp }: Props) => {
       console.log(key, index);
       if (words[index]) {
         // Replace the placeholder with the word from the dictionary
-        const filledWord = `<span class="filled-word-${index++}">${
+        const filledWord = `<span class="filled-word filled-word-${index++}">${
           words[index - 1].word
         }</span>`;
         return filledWord;
