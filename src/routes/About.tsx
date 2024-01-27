@@ -4,7 +4,6 @@ import PaintBrush from "../components/PaintBrush";
 import RelatedWords from "../components/RelatedWords";
 
 const About = () => {
-  const [miniGameNumber, setMiniGameNumber] = useState("");
   const [color, setColor] = useState("green");
   const cssColors = [
     "AliceBlue",
@@ -166,13 +165,9 @@ const About = () => {
         ))}
       </select>
       <PaintBrush color={color} />
-      <input
-        onChange={(event) => setMiniGameNumber(event.target.value)}
-      ></input>
-      {miniGameNumber === "game1" && <App />}
-      {miniGameNumber === "game2" && <h2>Mini Game 2</h2>}
-      {miniGameNumber === "words" && <RelatedWords />}
+      <App/>
     </div>
+    
   );
 };
 

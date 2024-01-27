@@ -17,8 +17,8 @@ const App = () => {
           intensity={Math.PI}
         />
         <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI} />
-        <RigidBody>
-          <Box position={[-1.2, 1, 0]}></Box>
+        <RigidBody position={[-1.2, 1, 0]}>
+          <Box ></Box>
         </RigidBody>
         <Box position={[1.2, 1, 0]} />
         <OrbitControls />
