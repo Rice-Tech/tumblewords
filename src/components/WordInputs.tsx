@@ -1,4 +1,5 @@
 import { WordInput } from "./StoryEngine"
+import { Input } from "./ui/input";
 
 interface Props{
     wordsList:WordInput[];
@@ -11,7 +12,7 @@ const WordInputs = ({wordsList, onChange}:Props) => {
         <div key={index}>
           <label>
             {input.partOfSpeech}:
-            <input
+            <Input
               type="text"
               value={input.word}
               onChange={(e) => onChange(e, index)}

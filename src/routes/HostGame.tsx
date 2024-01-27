@@ -17,6 +17,8 @@ import StoryEngine, {
 } from "../components/StoryEngine";
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+
 
 const HostGame = () => {
   const params = useParams();
@@ -121,7 +123,7 @@ const HostGame = () => {
             ))}
           </ul>
           {users.length > 0 && (
-            <button onClick={handleStartGame}>Start Game</button>
+            <Button onClick={handleStartGame}>Start Game</Button>
           )}
         </div>
       )}

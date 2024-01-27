@@ -3,7 +3,9 @@ import { FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
-
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 const Home = () => {
   const navigate = useNavigate();
 
@@ -45,22 +47,39 @@ const Home = () => {
   };
   return (
     <>
-      <h1>Tumblewords</h1>
-      <button onClick={handleHostGame}>Host a New Game</button>
-      <br />
-      <br />
-      <br />
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="gameId">Game Id: </label>
-        <input
-          name="gameId"
-          id="gameId"
-          placeholder="Game ID"
-          type="text"
-          required
-        />
-        <button type="submit">Join Game</button>
-      </form>
+      <h1 className="text-center text-4xl font-semibold leading-none tracking-tight">Tumblewords</h1>
+      <div className=" flex-col w-1/3 aspect-square m-auto justify-around">
+        <Card>
+          <CardHeader>
+            <CardTitle>Host a Game</CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <Button onClick={handleHostGame}>Host a New Game</Button>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Join a Game</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className=" flex-col">
+              <label htmlFor="gameId">
+                Game Id:{" "}
+                <Input
+                  name="gameId"
+                  id="gameId"
+                  placeholder="Game ID"
+                  type="text"
+                  required
+                />
+              </label>
+              <Button type="submit">Join Game</Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 };

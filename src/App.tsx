@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Box } from "./components/Box";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { OfficeScene } from "./components/OfficeScene";
+import "./App.css"
 const App = () => {
   return (
     <Canvas style={{ width: "100%", height: "100vh" }} gl={{antialias:true}}>

@@ -12,6 +12,7 @@ import { db } from "../firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { WordInput } from "../components/StoryEngine";
 import WordInputs from "../components/WordInputs";
+import { Button } from "@/components/ui/button";
 
 const PlayGame = () => {
   const params = useParams();
@@ -84,7 +85,7 @@ const PlayGame = () => {
     <div>
       PlayGame {params.gameId}
       <WordInputs wordsList={wordAssignments} onChange={handleInputChange} />
-      <button onClick={handleSubmitWords}>Submit words</button>
+      <Button onClick={handleSubmitWords}>Submit words</Button>
     </div>
   );
 };

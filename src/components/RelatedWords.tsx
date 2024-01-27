@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { en } from "naughty-words";
 import badwords from "./badwords.json";
+import { Input } from "./ui/input";
 
 type dataMuseResponse = { word: string; score: number; tags: string[] }[];
 
@@ -90,14 +91,14 @@ const RelatedWords = () => {
           ))}
         </select>{" "}
         
-        <input
+        <Input
           type="text"
           placeholder="Topic Word"
           onChange={(event) => setTopicWord(event.target.value)}
         />{" "}
         along with their parts of speech:
       </h2>
-      <input
+      <Input
           type="text"
           placeholder="First letters"
           onChange={(event) => setFirstLetters(event.target.value)}

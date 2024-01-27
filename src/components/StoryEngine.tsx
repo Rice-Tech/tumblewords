@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import StoryTemplate from "./StoryTemplate";
 import WordInputs from "./WordInputs";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface Props {
   templateProp: string;
@@ -47,9 +49,9 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
   return (
     <div>
       <WordInputs wordsList={wordsList} onChange={handleInputChange}/>
-      <button id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
+      <Button id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
         {showStory ? "Hide the Story" : "Reveal the Story"}
-      </button>
+      </Button>
 
       {showStory && (
         <>
@@ -60,12 +62,12 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
           />{" "}
           <br />
           <label htmlFor="revealIndexInput"></label>Reveal the Words
-          <input
+          <Input
             id="revealIndexInput"
             type="number"
             value={revealIndex}
             onChange={(event) => setRevealIndex(Number(event.target.value))}
-          ></input>
+          ></Input>
         </>
       )}
     </div>
