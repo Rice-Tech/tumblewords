@@ -9,10 +9,11 @@
   position: relative;
   color: green;
   text-decoration: underline;
-  animation: textEnter 2s ease-in forwards;
+  animation: textRepeat 200ms ease-in-out infinite alternate;
   color: rgba(0, 0, 0, 0);
-  scale: 1;
+  scale: 1 1;
   display: inline-block;
+  transition: 200ms ease-in-out ;
 }
 @keyframes textEnter {
   from {
@@ -22,6 +23,21 @@
   to {
     color: rgba(0, 0, 0, 1);
     transform: translate(0px, 0px) rotate(0deg);
+  }
+}
+@keyframes textRepeat{
+
+  0%{
+    scale: 1.03 .97;
+    color: black;
+    
+  }
+  50%{
+    color: rgb(99, 5, 5);
+  }
+  100%{
+    color: black;
+    scale: .97 1.3;
   }
 }
 .filledWord:hover{

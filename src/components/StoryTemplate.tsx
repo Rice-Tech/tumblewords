@@ -59,7 +59,7 @@ const StoryTemplate = ({ templateProp }: Props) => {
             <span
               key={`filledWord-${i}`}
               className={
-                `filledWord visible filledWord${i}`
+                `filledWord animEntry animRepeat filledWord${i}`
               }
             >
               {words[wordIndex].word}{" "}
