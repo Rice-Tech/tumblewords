@@ -6,7 +6,7 @@ import { Leva } from "leva";
 import { EcctrlJoystick } from "./components/ecctrl/EcctrlJoystick";
 import { Suspense, useEffect, useState } from "react";
 
-const root = ReactDOM.createRoot(document.querySelector("#root"));
+const root = ReactDOM.createRoot(document.querySelector("#root")!);
 
 const EcctrlJoystickControls = () => {
   const [isTouchScreen, setIsTouchScreen] = useState(false)
