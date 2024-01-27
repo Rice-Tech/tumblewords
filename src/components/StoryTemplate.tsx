@@ -9,9 +9,8 @@ interface WordInput {
 }
 
 const StoryTemplate = ({ templateProp }: Props) => {
-  const [template, setTemplate] = useState<string>(templateProp);
+  const [template /*, setTemplate*/] = useState<string>(templateProp);
   const [wordInputs, setWordInputs] = useState<WordInput[]>([]);
-  setTemplate(templateProp);
   const parseTemplate = (template: string): WordInput[] => {
     const regex = /\{(\w+)\}/g;
     const matches = template.match(regex);
