@@ -9,16 +9,18 @@ import {
   doc,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
-import { auth, db } from "../firebase";
+import { db } from "../firebase";
 import StoryTemplate from "../components/StoryTemplate";
 import madlib from "../assets/madlibs.json";
+import { useAuth } from "../contexts/AuthContext";
 
 const HostGame = () => {
   const params = useParams();
   const [users, setUsers] = useState<string[]>([]);
   const [gameStatus, setGameStatus] = useState("join");
+  const {currentUser} = useAuth()
   useEffect(() => {
-    if (!auth.currentUser) {
+    if (!currentUser) {
       return;
     }
 
@@ -37,10 +39,10 @@ const HostGame = () => {
 
     const unsubscribe = watchUsers();
     return unsubscribe;
-  }, []);
+  }, [currentUser]);
 
   const handleStartGame = async () => {
-    const uid = auth.currentUser?.uid;
+    const uid = currentUser?.uid;
     if (!uid) {
       console.log(
         "You must be logged in to host a game or at least have a valid session."
