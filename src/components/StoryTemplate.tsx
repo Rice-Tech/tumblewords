@@ -9,7 +9,7 @@ interface Props {
 const StoryTemplate = ({ template, words, revealIndex }: Props) => {
   const splitTemplate = template.split(/\{(\w+)\}/g);
   return (
-    <p className="storyTemplate">
+    <div className="storyTemplate">
       {splitTemplate.map((part, i) => {
         const wordIndex = Math.floor(i / 2);
         if (!(i % 2)) {
@@ -34,7 +34,7 @@ const StoryTemplate = ({ template, words, revealIndex }: Props) => {
           }
         }
       })}
-    </p>
+    </div>
   );
 };
 
