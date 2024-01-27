@@ -41,7 +41,11 @@ const PlayGame = () => {
         const wordSnaps: WordInput[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          wordSnaps.push({ word: data.word, partOfSpeech: data.partOfSpeech });
+          wordSnaps.push({
+            word: data.word,
+            partOfSpeech: data.partOfSpeech,
+            refPath: doc.ref.path,
+          });
         });
         setWordAssignments(wordSnaps);
       });
@@ -53,13 +57,34 @@ const PlayGame = () => {
     const unsubscribe = watchWords();
     return unsubscribe;
   }, [currentUser]);
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newWordInputs = [...wordAssignments];
+    newWordInputs[index].word = e.target.value;
+    setWordAssignments(newWordInputs);
+  };
+  const handleSubmitWords = async () => {
+    wordAssignments.forEach((assignedWord) => {
+      if (!assignedWord.refPath) {
+        return;
+      }
+      setDoc(
+        doc(db, assignedWord.refPath),
+        {
+          word: assignedWord.word,
+          status: "submitted",
+        },
+        { merge: true }
+      );
+    });
+  };
   return (
     <div>
       PlayGame {params.gameId}
-      <WordInputs
-        wordsList={wordAssignments}
-        onChange={(event) => console.log(event.target.value)}
-      />
+      <WordInputs wordsList={wordAssignments} onChange={handleInputChange} />
+      <button onClick={handleSubmitWords}>Submit words</button>
     </div>
   );
 };

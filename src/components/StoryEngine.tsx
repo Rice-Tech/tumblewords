@@ -10,6 +10,7 @@ interface Props {
 export interface WordInput {
   word: string;
   partOfSpeech: string;
+  refPath?:string
 }
 
 export const parseTemplate = (template: string): WordInput[] => {
@@ -45,7 +46,7 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
 
   return (
     <div>
-      <WordInputs wordsList={wordInputs} onChange={handleInputChange}/>
+      <WordInputs wordsList={wordsList} onChange={handleInputChange}/>
       <button id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
         {showStory ? "Hide the Story" : "Reveal the Story"}
       </button>
@@ -54,7 +55,7 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
         <>
           <StoryTemplate
             template={template}
-            words={wordInputs}
+            words={wordsList}
             revealIndex={revealIndex}
           />{" "}
           <br />

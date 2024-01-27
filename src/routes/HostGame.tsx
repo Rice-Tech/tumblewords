@@ -7,10 +7,14 @@ import {
   onSnapshot,
   setDoc,
   doc,
+  addDoc,
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
-import StoryEngine, { WordInput } from "../components/StoryEngine";
+import StoryEngine, {
+  WordInput,
+  parseTemplate,
+} from "../components/StoryEngine";
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -45,7 +49,7 @@ const HostGame = () => {
         const wordSnaps: WordInput[] = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          wordSnaps.push({ word: data.word, partOfSpeech: data.partOfSpeech });
+          wordSnaps.push({ word: data.word, partOfSpeech: data.partOfSpeech, refPath:doc.ref.path });
         });
         setWordsList(wordSnaps);
       });
@@ -85,7 +89,24 @@ const HostGame = () => {
 
     updateRoomStatus("play");
     setGameStatus("play");
+    const newWordsList = parseTemplate(madlib[0].template)
+    console.table(newWordsList);
+    if (!newWordsList.length) {
+      return;
+    }
+    const ref = `rooms/${params.gameId}/words`;
+    newWordsList.forEach((wordInput, index) => {
+      const assignedUser = users[index % users.length];
+      addDoc(collection(db, ref), {
+        word: wordInput.word,
+        partOfSpeech: wordInput.partOfSpeech,
+        timeAdded: new Date().getTime(),
+        status: "new",
+        user: assignedUser,
+      });
+    });
   };
+
   return (
     <>
       <div>HostGame</div>
@@ -107,7 +128,7 @@ const HostGame = () => {
 
       {gameStatus === "play" && (
         <StoryEngine
-          templateProp={madlib[1].template || "Error Loading Template"}
+          templateProp={madlib[0].template || "Error Loading Template"}
           wordsList={wordsList}
         />
       )}
