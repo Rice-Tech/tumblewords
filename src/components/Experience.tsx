@@ -1,12 +1,12 @@
 import { Grid, KeyboardControls } from "@react-three/drei";
 import { Perf } from "r3f-perf";
 import { Physics } from "@react-three/rapier";
-import Ecctrl from "../src/Ecctrl";
+import Ecctrl from "../Ecctrl";
 import Floor from "./Floor";
 import Lights from "./Lights";
 import Steps from "./Steps";
 import Slopes from "./Slopes";
-import { Words } from "../src/Words.jsx";
+import { Words } from "../Words.jsx";
 import RoughPlane from "./RoughPlane";
 import RigidObjects from "./RigidObjects";
 import FloatingPlatform from "./FloatingPlatform";

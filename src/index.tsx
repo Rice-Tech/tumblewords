@@ -1,7 +1,7 @@
 import "./style.css";
 import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
-import Experience from "../example/Experience";
+import Experience from "./components/Experience";
 import { Leva } from "leva";
 import { EcctrlJoystick } from "./EcctrlJoystick";
 import { Suspense, useEffect, useState } from "react";
