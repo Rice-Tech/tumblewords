@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 
 interface Props {
   templateProp: string;
@@ -9,8 +9,12 @@ interface WordInput {
 }
 
 const StoryTemplate = ({ templateProp }: Props) => {
+  const [completedMadLib, setCompletedMadLib] = useState<JSX.Element>(
+    <Fragment></Fragment>
+  );
   const [template /*, setTemplate*/] = useState<string>(templateProp);
   const [wordInputs, setWordInputs] = useState<WordInput[]>([]);
+  const [revealIndex, setRevealIndex] = useState(0);
   const parseTemplate = (template: string): WordInput[] => {
     const regex = /\{(\w+)\}/g;
     const matches = template.match(regex);
@@ -38,26 +42,38 @@ const StoryTemplate = ({ templateProp }: Props) => {
     setCompletedMadLib(completedMadLib);
   };
 
-  const fillInTemplate = (template: string, words: WordInput[]): string => {
-    //let index = 0; // Initialize index for multiple occurrences
-    let index = 0;
-    return template.replace(/\{(\w+)\}/g, (match, key) => {
-      //const word = words[key];
-      console.log(key, index);
-      if (words[index]) {
-        // Replace the placeholder with the word from the dictionary
-        const filledWord = `<span class="filled-word filled-word-${index++}">${
-          words[index - 1].word
-        }</span>`;
-        return filledWord;
+  const fillInTemplate = (
+    template: string,
+    words: WordInput[]
+  ): JSX.Element => {
+    const parts: JSX.Element[] = [];
+    console.log(template);
+    console.table(template.split(/\{(\w+)\}/g));
+    template.split(/\{(\w+)\}/g).forEach((part, i) => {
+      const wordIndex = Math.floor(i / 2);
+      if (!(i % 2)) {
+        parts.push(<Fragment key={i}>{part}</Fragment>);
       } else {
-        // If word not found, keep the placeholder unchanged
-        return match;
+        if (wordIndex < words.length) {
+          parts.push(
+            <span
+              key={`filledWord-${i}`}
+              className={
+                `filledWord visible filledWord${i}`
+              }
+            >
+              {words[wordIndex].word}{" "}
+              <div className="posTooltip" hidden>
+                {part}
+              </div>
+            </span>
+          );
+        }
       }
     });
-  };
 
-  const [completedMadLib, setCompletedMadLib] = useState<string>("");
+    return <Fragment>{parts}</Fragment>;
+  };
 
   useEffect(() => {
     setWordInputs(parseTemplate(template));
@@ -81,10 +97,12 @@ const StoryTemplate = ({ templateProp }: Props) => {
         ))}
         <button type="submit">Generate Mad Lib</button>
       </form>
-      <p
-        className="storyTemplate"
-        dangerouslySetInnerHTML={{ __html: completedMadLib }}
-      ></p>
+      <p className="storyTemplate">{completedMadLib}</p>
+      <input
+        type="number"
+        onChange={(event) => setRevealIndex(Number(event.target.value))}
+      ></input>
+      <p>{revealIndex}</p>
     </div>
   );
 };

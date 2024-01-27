@@ -49,6 +49,8 @@ const HostGame = () => {
       );
       return 2;
     }
+
+
     const updateRoomStatus = async (newRoomStatus: string) => {
       const ref = `rooms/${params.gameId}`;
       const roomDoc = await setDoc(
@@ -75,7 +77,7 @@ const HostGame = () => {
           <h3>Participants</h3>
           <ul>
             {users.map((user) => (
-              <li>{user}</li>
+              <li key={user}>{user}</li>
             ))}
           </ul>
           {users.length > 0 && (
@@ -85,7 +87,7 @@ const HostGame = () => {
       )}
 
       {gameStatus === "play" && (
-        <StoryTemplate templateProp={madlib[0].template} />
+        <StoryTemplate templateProp={madlib[1].template||"Error Loading Template"} />
       )}
     </>
   );
