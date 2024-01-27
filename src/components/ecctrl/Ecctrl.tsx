@@ -12,9 +12,9 @@ import {
 import { useEffect, useRef, useMemo, type ReactNode, forwardRef, type RefObject } from "react";
 import * as THREE from "three";
 import { useControls } from "leva";
-import { useFollowCam } from "./hooks/useFollowCam";
-import { useGame } from "./stores/useGame";
-import { useJoystickControls } from "./stores/useJoystickControls";
+import { useFollowCam } from "../../hooks/useFollowCam";
+import { useGame } from "../../stores/useGame";
+import { useJoystickControls } from "../../stores/useJoystickControls";
 import type {
   Collider,
   RayColliderToi,
@@ -22,10 +22,10 @@ import type {
 } from "@dimforge/rapier3d-compat";
 
 export { EcctrlAnimation } from "./EcctrlAnimation";
-export { useFollowCam } from "./hooks/useFollowCam";
-export { useGame } from "./stores/useGame";
-export { EcctrlJoystick } from "../src/EcctrlJoystick";
-export { useJoystickControls } from "./stores/useJoystickControls";
+export { useFollowCam } from "../../hooks/useFollowCam";
+export { useGame } from "../../stores/useGame";
+export { EcctrlJoystick } from "./EcctrlJoystick";
+export { useJoystickControls } from "../../stores/useJoystickControls";
 
 // Retrieve current moving direction of the character
 const getMovingDirection = (forward: boolean,
