@@ -6,6 +6,7 @@ import Floor from "./Floor";
 import Lights from "./Lights";
 import Steps from "./Steps";
 import Slopes from "./Slopes";
+import { Words } from "../src/Words.jsx";
 import RoughPlane from "./RoughPlane";
 import RigidObjects from "./RigidObjects";
 import FloatingPlatform from "./FloatingPlatform";
@@ -75,6 +76,8 @@ export default function Experience() {
 
         {/* Rough plan */}
         <RoughPlane />
+
+        <Words />
 
         {/* Slopes and stairs */}
         <Slopes />
