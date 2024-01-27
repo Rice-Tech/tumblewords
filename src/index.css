@@ -9,11 +9,10 @@
   position: relative;
   color: green;
   text-decoration: underline;
-  animation: textRepeat 200ms ease-in-out infinite alternate;
   color: rgba(0, 0, 0, 0);
   scale: 1 1;
   display: inline-block;
-  transition: 200ms ease-in-out ;
+  transition: 200ms ease-in-out;
 }
 @keyframes textEnter {
   from {
@@ -25,38 +24,47 @@
     transform: translate(0px, 0px) rotate(0deg);
   }
 }
-@keyframes textRepeat{
-
-  0%{
-    scale: 1.03 .97;
-    color: black;
-    
+@keyframes textRepeat {
+  0% {
+    scale: 1.03 0.97;
   }
-  50%{
-    color: rgb(99, 5, 5);
-  }
-  100%{
-    color: black;
-    scale: .97 1.3;
+  100% {
+    scale: 0.97 1.3;
   }
 }
-.filledWord:hover{
-  scale:1.3;
+.filledWord:hover {
+  scale: 1.3;
   background-color: white;
+}
+.filledWord.hiddenWord {
+  color: rgba(0, 0, 0, 0);
+}
+.filledWord.revealedWord {
+  color: red;
+  animation: textRepeat 200ms ease-in-out infinite alternate;
 }
 
 .storyTemplate {
   color: black;
+  scale: 0;
+  animation: templateEntry 3s forwards;
+}
+@keyframes templateEntry {
+  0% {
+    scale: 0;
+  }
+  100% {
+    scale: 1;
+  }
 }
 
-
-.filledWord:hover .posTooltip{
-  display:block;
+.filledWord:hover .posTooltip {
+  display: block;
   background-color: white;
 }
-.posTooltip{
+.posTooltip {
   position: absolute;
-  top:-110%;
+  top: -110%;
   display: none;
   position: absolute;
   background-color: rgba(0, 0, 0, 0);

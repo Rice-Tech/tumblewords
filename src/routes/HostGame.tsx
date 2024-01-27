@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase";
-import StoryTemplate from "../components/StoryTemplate";
+import StoryEngine from "../components/StoryEngine";
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -18,7 +18,7 @@ const HostGame = () => {
   const params = useParams();
   const [users, setUsers] = useState<string[]>([]);
   const [gameStatus, setGameStatus] = useState("join");
-  const {currentUser} = useAuth()
+  const { currentUser } = useAuth();
   useEffect(() => {
     if (!currentUser) {
       return;
@@ -49,7 +49,6 @@ const HostGame = () => {
       );
       return 2;
     }
-
 
     const updateRoomStatus = async (newRoomStatus: string) => {
       const ref = `rooms/${params.gameId}`;
@@ -87,7 +86,9 @@ const HostGame = () => {
       )}
 
       {gameStatus === "play" && (
-        <StoryTemplate templateProp={madlib[1].template||"Error Loading Template"} />
+        <StoryEngine
+          templateProp={madlib[1].template || "Error Loading Template"}
+        />
       )}
     </>
   );
