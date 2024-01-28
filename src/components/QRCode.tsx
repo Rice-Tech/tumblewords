@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 const qrCode = new QRCodeStyling({
   width: 300,
   height: 300,
-  image: "../TumbleWorksLogo.svg",
+  image: "../Logo.svg",
   dotsOptions: {
     color: "#slate",
     type: "rounded",
@@ -27,10 +27,10 @@ export default function QRCode({ url }: Props) {
       return;
     }
     qrCode.append(ref.current);
-    const codeCanvas = ref.current.querySelector("canvas")
-    if(!codeCanvas){
-      console.log("No Canvas")
-      return
+    const codeCanvas = ref.current.querySelector("canvas");
+    if (!codeCanvas) {
+      console.log("No Canvas");
+      return;
     }
     codeCanvas.setAttribute("width", "");
     codeCanvas.setAttribute("height", "");
@@ -50,11 +50,8 @@ export default function QRCode({ url }: Props) {
           {url}
         </a>
       </Button>
-      
 
       <div className=" flex justify-around w-full" ref={ref} />
     </div>
   );
 }
-
-

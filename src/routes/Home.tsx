@@ -47,9 +47,15 @@ const Home = () => {
   };
   return (
     <>
-      <h1 className="text-center text-4xl font-semibold leading-none tracking-tight">
-        Tumblewords
-      </h1>
+      <div className="inline-flex items-center justify-around w-full">
+        <span className="inline-flex items-center">
+        <img src="Logo.svg" alt="Tumblewords logo" className="w-12 h-12 mr-2 " />
+        <h1 className="text-4xl font-semibold leading-none tracking-tight">
+          Tumblewords
+        </h1>
+        </span>
+      </div>
+
       <div className=" flex-col w-1/3 aspect-square m-auto justify-around">
         <Card>
           <CardHeader>
