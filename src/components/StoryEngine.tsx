@@ -1,8 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import StoryTemplate from "./StoryTemplate";
-import WordInputs from "./WordInputs";
 import { Button } from "./ui/button";
-
 
 interface Props {
   templateProp: string;
@@ -13,6 +11,9 @@ export interface WordInput {
   word: string;
   partOfSpeech: string;
   refPath?: string;
+  user?: string;
+  index: number;
+  status?: string;
 }
 
 export const parseTemplate = (template: string): WordInput[] => {
@@ -29,27 +30,29 @@ export const parseTemplate = (template: string): WordInput[] => {
 
 const StoryEngine = ({ templateProp, wordsList }: Props) => {
   const [template /*, setTemplate*/] = useState<string>(templateProp);
-  const [wordInputs, setWordInputs] = useState<WordInput[]>(wordsList);
+  //const [wordInputs, setWordInputs] = useState<WordInput[]>(wordsList);
   const [revealIndex, setRevealIndex] = useState(0);
   const [showStory, setShowStory] = useState(false);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    const newWordInputs = [...wordInputs];
-    newWordInputs[index].word = e.target.value;
-    setWordInputs(newWordInputs);
-  };
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement>,
+  //   index: number
+  // ) => {
+  //   const newWordInputs = [...wordInputs];
+  //   newWordInputs[index].word = e.target.value;
+  //   setWordInputs(newWordInputs);
+  // };
 
-  useEffect(() => {
-    setWordInputs(parseTemplate(template));
-  }, [template]);
+  // useEffect(() => {
+  //   setWordInputs(parseTemplate(template));
+  // }, [template]);
 
   return (
     <div className=" flex-col">
-      <WordInputs wordsList={wordsList} onChange={handleInputChange} />
-
+      {/* <WordInputs wordsList={wordsList} onChange={handleInputChange} /> */}
+      <h3>
+        Recieved {wordsList.filter((item) => item.status == "submitted").length}
+      </h3>
       {showStory && (
         <>
           <StoryTemplate
@@ -58,7 +61,10 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
             revealIndex={revealIndex}
           />{" "}
           <br />
-          <Button  className="m-auto" onClick={() => setRevealIndex(revealIndex + 1)}>
+          <Button
+            className="m-auto"
+            onClick={() => setRevealIndex(revealIndex + 1)}
+          >
             Reveal Next Word
           </Button>
           {/* 
@@ -71,7 +77,11 @@ const StoryEngine = ({ templateProp, wordsList }: Props) => {
           ></Input> */}
         </>
       )}
-      <Button className="m-auto" id="revealStoryButton" onClick={() => setShowStory(!showStory)}>
+      <Button
+        className="m-auto"
+        id="revealStoryButton"
+        onClick={() => setShowStory(!showStory)}
+      >
         {showStory ? "Hide the Story" : "Reveal the Story"}
       </Button>
     </div>

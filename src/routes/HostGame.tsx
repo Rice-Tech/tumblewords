@@ -61,6 +61,8 @@ const HostGame = () => {
             word: data.word,
             partOfSpeech: data.partOfSpeech,
             refPath: doc.ref.path,
+            index: data.index,
+            status: data.status,
           });
         });
         setWordsList(wordSnaps);
@@ -109,12 +111,14 @@ const HostGame = () => {
     const ref = `rooms/${params.gameId}/words`;
     newWordsList.forEach((wordInput, index) => {
       const assignedUser = users[index % users.length];
+      console.log(wordInput.word, index)
       addDoc(collection(db, ref), {
         word: wordInput.word,
         partOfSpeech: wordInput.partOfSpeech,
         timeAdded: new Date().getTime(),
         status: "new",
         user: assignedUser,
+        index: wordInput.index,
       });
     });
   };

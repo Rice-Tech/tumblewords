@@ -25,7 +25,11 @@ const StoryTemplate = ({ template, words, revealIndex }: Props) => {
                     : "filledWord hiddenWord"
                 }
               >
-                {words[wordIndex].word}{" "}
+                {
+                  words.filter((word) => {
+                    return word.index == wordIndex;
+                  })[0].word
+                }{" "}
                 <div className="posTooltip" hidden>
                   {part}
                 </div>
