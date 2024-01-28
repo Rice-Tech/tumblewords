@@ -23,6 +23,11 @@ const Root = () => {
                 About
               </Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to={"/minigame1"} className={navigationMenuTriggerStyle()}>
+                Mini Game
+              </Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 

@@ -10,7 +10,7 @@ import { easing } from "maath";
 import { useCallback, useRef } from "react";
 import * as THREE from "three";
 import { useSnapshot } from "valtio";
-import { state } from "@/Tojo";
+import { state } from "@/MiniGame1";
 import { PingPong } from "./Pingpong";
 
 export function Paddle({

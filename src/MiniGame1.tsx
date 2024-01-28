@@ -78,7 +78,7 @@ function generateRandomWord() {
 interface Props {
   ready: boolean;
 }
-export default function Tojo({ ready }: Props) {
+export default function MiniGame1({ ready }: Props) {
   const { word1, word2 } = useSnapshot(state);
   const [musicStarted, setMusicStarted] = useState(false);
 
@@ -95,7 +95,7 @@ export default function Tojo({ ready }: Props) {
     }
   };
 
-  startAudio()
+  startAudio();
 
   return (
     <>

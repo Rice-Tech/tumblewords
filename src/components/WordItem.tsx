@@ -2,7 +2,7 @@ import { Text } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useCallback, useRef } from "react";
 import * as THREE from "three";
-import { state } from "@/Tojo";
+import { state } from "@/MiniGame1";
 
 interface WordItemProps {
   position: THREE.Vector3;

@@ -8,6 +8,7 @@ import Home from "./routes/Home";
 import About from "./routes/About";
 import HostGame from "./routes/HostGame";
 import PlayGame from "./routes/PlayGame";
+import MiniGame1 from "./MiniGame1";
 
 const router = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/game/:gameId/play",
-        element: <PlayGame/>
+        element: <PlayGame />,
+      },
+      {
+        path: "/minigame1",
+        element: <MiniGame1 ready={true} />,
       },
     ],
   },
