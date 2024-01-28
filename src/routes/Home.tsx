@@ -2,7 +2,7 @@ import { FormEvent } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,14 +17,14 @@ const Home = () => {
       );
       return 2;
     }
-    const queryExistingRoom = async () => {
-      const q = query(collection(db, "rooms"), where("hostUID", "==", uid));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-      });
-    };
+    // const queryExistingRoom = async () => {
+    //   const q = query(collection(db, "rooms"), where("hostUID", "==", uid));
+    //   const querySnapshot = await getDocs(q);
+    //   querySnapshot.forEach((doc) => {
+    //     // doc.data() is never undefined for query doc snapshots
+    //     console.log(doc.id, " => ", doc.data());
+    //   });
+    // };
 
     const createNewRoom = async () => {
       const roomDoc = await addDoc(collection(db, "rooms"), {
@@ -35,7 +35,7 @@ const Home = () => {
       });
       return roomDoc.id;
     };
-    queryExistingRoom();
+    //queryExistingRoom();
     const gameId = await createNewRoom();
     navigate(`/game/${gameId}`);
   };
@@ -47,7 +47,9 @@ const Home = () => {
   };
   return (
     <>
-      <h1 className="text-center text-4xl font-semibold leading-none tracking-tight">Tumblewords</h1>
+      <h1 className="text-center text-4xl font-semibold leading-none tracking-tight">
+        Tumblewords
+      </h1>
       <div className=" flex-col w-1/3 aspect-square m-auto justify-around">
         <Card>
           <CardHeader>

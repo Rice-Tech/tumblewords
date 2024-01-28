@@ -9,6 +9,7 @@ import About from "./routes/About";
 import HostGame from "./routes/HostGame";
 import PlayGame from "./routes/PlayGame";
 import MiniGame1 from "./MiniGame1";
+import { GatherWordsProvider } from "./contexts/GatherWordsContext";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/game/:gameId/play",
-        element: <PlayGame />,
+        element: (
+          <GatherWordsProvider>
+            <PlayGame />
+          </GatherWordsProvider>
+        ),
       },
       {
         path: "/minigame1",

@@ -1,9 +1,5 @@
 import { Text } from "@react-three/drei";
-import {
-  ContactForcePayload,
-  RapierRigidBody,
-  RigidBody,
-} from "@react-three/rapier";
+import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useCallback, useRef, useState } from "react";
 import * as THREE from "three";
 import { state } from "@/MiniGame1";
@@ -19,7 +15,7 @@ interface WordItemProps {
 export function WordItem({ position, color, words, boxId }: WordItemProps) {
   const api = useRef<RapierRigidBody>(null);
   const [wordIndex, setWordIndex] = useState(0);
-  const contactForce = useCallback((payload: ContactForcePayload) => {
+  const contactForce = useCallback(() => {
     if (boxId === 1) {
       state.api.soundEnemy1();
       state.api.changeEnemy1Text();
