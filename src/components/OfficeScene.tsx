@@ -6,6 +6,8 @@ Command: npx gltfjsx@6.2.16 -t public/OfficeScene.glb
 import * as THREE from "three";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
+// import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -18,8 +20,12 @@ type GLTFResult = GLTF & {
 
 export function OfficeScene(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF("/OfficeScene.glb") as GLTFResult;
+  const ref = useRef<THREE.Group>(null);
+  // useFrame(()=>{
+  //   ref.current?.rotateOnAxis(new THREE.Vector3(0,1,0), 0.001);
+  // })
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} ref={ref}>
       <mesh
         geometry={nodes.Office_Scene.geometry}
         material={materials.OfficeMat}

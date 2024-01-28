@@ -1,7 +1,7 @@
-import { useTexture } from "@react-three/drei";
+import { Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
-import { Physics } from "@react-three/rapier";
+import { Physics, RigidBody } from "@react-three/rapier";
 import { useState } from "react";
 import * as THREE from "three";
 import { proxy, useSnapshot } from "valtio";
@@ -118,9 +118,10 @@ export default function MiniGame1({ ready }: Props) {
           shadow-mapSize={1024}
           shadow-bias={-0.0001}
         />
-        <OfficeScene scale={[6, 6, 6]} position={[0, -5, 20]} />
+
         <Physics gravity={[0, -20, 10]} timeStep="vary">
           {ready && <Ball position={[0, 5, 0]} />}
+          <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} />
           <WordItem
             color="orange"
             position={new THREE.Vector3(2.75, 1.5, 0)}
@@ -136,6 +137,12 @@ export default function MiniGame1({ ready }: Props) {
             posScale={-2}
           />
           <Paddle />
+          <RigidBody type="fixed">
+            <Plane position={[0, -5.1, 0]} scale={100} rotation={[-Math.PI / 2, 0, 0]} />
+          </RigidBody>
+          <RigidBody type="fixed">
+            <Plane position={[0, 10, 0]} scale={100} rotation={[Math.PI / 2, 0, 0]} />
+          </RigidBody>
         </Physics>
         <EffectComposer disableNormalPass>
           <N8AO aoRadius={0.5} intensity={2} />

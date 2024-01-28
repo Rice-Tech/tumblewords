@@ -1,10 +1,6 @@
 import { useTexture } from "@react-three/drei";
-import { useFrame} from "@react-three/fiber";
-import {
-  BallCollider,
-  RapierRigidBody,
-  RigidBody,
-} from "@react-three/rapier";
+import { useFrame } from "@react-three/fiber";
+import { BallCollider, RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import { state } from "@/MiniGame1";
 import logo from "../resources/crossp.jpg";
@@ -21,7 +17,8 @@ export function Ball(props: Props) {
       return;
     }
     const ball = rigidBodyRef.current;
-    if (ball.translation().y < -10) {
+    if (ball.translation().y < -3) {
+      console.log(ball.translation().y);
       rigidBodyRef.current.setTranslation({ x: 0, y: 5, z: 0 }, true);
       rigidBodyRef.current.setLinvel({ x: 0, y: 5, z: 0 }, true);
       state.api.reset();
@@ -44,7 +41,6 @@ export function Ball(props: Props) {
           <meshStandardMaterial map={map} />
         </mesh>
       </RigidBody>
-
     </group>
   );
 }
