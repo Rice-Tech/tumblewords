@@ -3,7 +3,7 @@ import { MeshProps } from "@react-three/fiber";
 import { useRef, useState } from "react";
 import { Mesh } from "three";
 
-export function Box(props: MeshProps) {
+export default function Box(props: MeshProps) {
   // This reference gives us direct access to the THREE.Mesh object
   const ref = useRef<Mesh>(null);
   // Hold state for hovered and clicked events
