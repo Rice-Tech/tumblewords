@@ -14,7 +14,6 @@ import {
 import { useGatherWords } from "@/contexts/GatherWordsContext";
 import MiniGame1 from "@/MiniGame1";
 
-
 const PlayGame = () => {
   const params = useParams();
   const [status, setStatus] = useState("collectwords");
@@ -52,7 +51,7 @@ const PlayGame = () => {
   };
   return (
     <div>
-      <Card className=" m-auto  w-1/2">
+      <Card className=" m-auto  w-1/2 hidden">
         <CardHeader>
           <CardTitle>Play Game</CardTitle>
           <CardDescription>ID: {params.gameId}</CardDescription>
@@ -65,6 +64,10 @@ const PlayGame = () => {
         </CardContent>
       </Card>
       <MiniGame1 ready={true}></MiniGame1>
+
+      <Button className=" fixed " onClick={handleSubmitWords}>
+        {status == "submitted" ? "Resubmit" : "Submit words"}
+      </Button>
     </div>
   );
 };

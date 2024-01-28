@@ -109,7 +109,7 @@ export default function MiniGame1({ ready }: Props) {
   return (
     <>
       <Canvas
-        style={{ width: "100%", height: "100vh" }}
+        style={{ width: "100%", height: "90vh" }}
         shadows
         dpr={[1, 1.5]}
         gl={{ antialias: false }}
