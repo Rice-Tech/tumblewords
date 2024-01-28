@@ -41,7 +41,7 @@ const PlayGame = () => {
       setDoc(
         doc(db, assignedWord.refPath),
         {
-          word: assignedWord.word,
+          word: assignedWord.word || "No Word",
           status: "submitted",
         },
         { merge: true }
