@@ -56,7 +56,7 @@ const Home = () => {
         </span>
       </div>
 
-      <div className=" flex-col w-1/3 aspect-square m-auto justify-around">
+      <div className=" flex-col max-w-md aspect-square m-auto justify-around">
         <Card>
           <CardHeader>
             <CardTitle>Host a Game</CardTitle>
