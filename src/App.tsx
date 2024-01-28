@@ -5,8 +5,11 @@ import { Box } from "./components/Box";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { OfficeScene } from "./components/OfficeScene";
 import "./App.css"
+import Tojo from "./Tojo.js"
 const App = () => {
   return (
+    <>
+    <Tojo ready={true}/>
     <Canvas style={{ width: "100%", height: "100vh" }} gl={{antialias:true}}>
       <Physics>
         <ambientLight intensity={Math.PI / 2} />
@@ -33,6 +36,7 @@ const App = () => {
       </Physics>
       <OfficeScene position={[0,0,10]}/>
     </Canvas>
+    </>
   );
 };
 
