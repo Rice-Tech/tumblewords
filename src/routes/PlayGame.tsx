@@ -25,6 +25,7 @@ const PlayGame = () => {
   const params = useParams();
   const { currentUser } = useAuth();
   const [wordAssignments, setWordAssignments] = useState<WordInput[]>([]);
+  const [status, setStatus] = useState("collectwords");
   useEffect(() => {
     if (!currentUser) {
       console.log(
@@ -53,6 +54,9 @@ const PlayGame = () => {
             word: data.word,
             partOfSpeech: data.partOfSpeech,
             refPath: doc.ref.path,
+            index: data.index,
+            status: data.status,
+            user: data.user,
           });
         });
         setWordAssignments(wordSnaps);
@@ -70,7 +74,11 @@ const PlayGame = () => {
     index: number
   ) => {
     const newWordInputs = [...wordAssignments];
-    newWordInputs[index].word = e.target.value;
+    newWordInputs.filter((item) => {
+      console.table(item);
+      console.log(index);
+      return item.index == index;
+    })[0].word = e.target.value;
     setWordAssignments(newWordInputs);
   };
   const handleSubmitWords = async () => {
@@ -87,6 +95,7 @@ const PlayGame = () => {
         { merge: true }
       );
     });
+    setStatus("submitted");
   };
   return (
     <div>
@@ -100,7 +109,9 @@ const PlayGame = () => {
             wordsList={wordAssignments}
             onChange={handleInputChange}
           />
-          <Button onClick={handleSubmitWords}>Submit words</Button>
+          <Button onClick={handleSubmitWords}>
+            {status == "submitted" ? "Resubmit" : "Submit words"}
+          </Button>
         </CardContent>
       </Card>
     </div>

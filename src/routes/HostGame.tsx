@@ -18,7 +18,13 @@ import StoryEngine, {
 import madlib from "../assets/madlibs.json";
 import { useAuth } from "../contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const HostGame = () => {
   const params = useParams();
@@ -55,6 +61,8 @@ const HostGame = () => {
             word: data.word,
             partOfSpeech: data.partOfSpeech,
             refPath: doc.ref.path,
+            index: data.index,
+            status: data.status,
           });
         });
         setWordsList(wordSnaps);
@@ -86,7 +94,7 @@ const HostGame = () => {
         doc(db, ref),
         {
           status: newRoomStatus,
-          storyTemplate: madlib[0].template,
+          storyTemplate: madlib[1].template,
         },
         { merge: true }
       );
@@ -95,7 +103,7 @@ const HostGame = () => {
 
     updateRoomStatus("play");
     setGameStatus("play");
-    const newWordsList = parseTemplate(madlib[0].template);
+    const newWordsList = parseTemplate(madlib[1].template);
     console.table(newWordsList);
     if (!newWordsList.length) {
       return;
@@ -103,12 +111,14 @@ const HostGame = () => {
     const ref = `rooms/${params.gameId}/words`;
     newWordsList.forEach((wordInput, index) => {
       const assignedUser = users[index % users.length];
+      console.log(wordInput.word, index)
       addDoc(collection(db, ref), {
         word: wordInput.word,
         partOfSpeech: wordInput.partOfSpeech,
         timeAdded: new Date().getTime(),
         status: "new",
         user: assignedUser,
+        index: wordInput.index,
       });
     });
   };
@@ -153,11 +163,13 @@ const HostGame = () => {
           <Card>
             <CardHeader>
               <CardTitle>Story</CardTitle>
-              <CardDescription>Players Choose Words and then a story is created here!</CardDescription>
+              <CardDescription>
+                Players Choose Words and then a story is created here!
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <StoryEngine
-                templateProp={madlib[0].template || "Error Loading Template"}
+                templateProp={madlib[1].template || "Error Loading Template"}
                 wordsList={wordsList}
               />
             </CardContent>
