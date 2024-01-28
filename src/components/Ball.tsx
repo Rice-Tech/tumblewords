@@ -18,7 +18,6 @@ export function Ball(props: Props) {
     }
     const ball = rigidBodyRef.current;
     if (ball.translation().y < -3) {
-      console.log(ball.translation().y);
       rigidBodyRef.current.setTranslation({ x: 0, y: 5, z: 0 }, true);
       rigidBodyRef.current.setLinvel({ x: 0, y: 5, z: 0 }, true);
       state.api.reset();
@@ -34,6 +33,7 @@ export function Ball(props: Props) {
         canSleep={false}
         colliders={false}
         enabledTranslations={[true, true, false]}
+        userData={{ id: "ball" }}
       >
         <BallCollider args={[0.5]} />
         <mesh castShadow receiveShadow>

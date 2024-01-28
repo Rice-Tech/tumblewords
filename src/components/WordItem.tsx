@@ -1,21 +1,25 @@
 import { Text } from "@react-three/drei";
-import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useCallback, useRef } from "react";
+import {
+  ContactForcePayload,
+  RapierRigidBody,
+  RigidBody,
+} from "@react-three/rapier";
+import { useCallback, useRef, useState } from "react";
 import * as THREE from "three";
 import { state } from "@/MiniGame1";
 
 interface WordItemProps {
   position: THREE.Vector3;
   color: string;
-  inText: string;
+  words: string[];
   boxId: number;
   posScale: number;
 }
 
-export function WordItem({ position, color, inText, boxId }: WordItemProps) {
+export function WordItem({ position, color, words, boxId }: WordItemProps) {
   const api = useRef<RapierRigidBody>(null);
-
-  const contactForce = useCallback(() => {
+  const [wordIndex, setWordIndex] = useState(0);
+  const contactForce = useCallback((payload: ContactForcePayload) => {
     if (boxId === 1) {
       state.api.soundEnemy1();
       state.api.changeEnemy1Text();
@@ -35,6 +39,20 @@ export function WordItem({ position, color, inText, boxId }: WordItemProps) {
       canSleep={false}
       ref={api}
       onContactForce={contactForce}
+      onCollisionEnter={(event) => {
+        if (!event.other.rigidBody) {
+          return;
+        }
+        const userData = event.other.rigidBody.userData as any;
+        //const id2 = event.rigidBody?.userData as any;
+        const id = userData.id;
+        if (id == "ball") {
+          setWordIndex((wordIndex + 1) % words.length);
+          console.log("Ball");
+        } else {
+          console.log("Something else");
+        }
+      }}
       position={position}
     >
       <mesh>
@@ -44,9 +62,10 @@ export function WordItem({ position, color, inText, boxId }: WordItemProps) {
           rotation={[0, 0, 0]}
           position={[0, 0, 0.7]}
           fontSize={0.6}
-          children={inText}
           color={"red"}
-        />
+        >
+          {words[wordIndex]}
+        </Text>
         <boxGeometry args={[2.5, 1, 1]} />
         <meshStandardMaterial color={color} />
       </mesh>

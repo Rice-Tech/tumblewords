@@ -1,10 +1,10 @@
 import { Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
-import { Physics, RigidBody } from "@react-three/rapier";
-import { useState } from "react";
+import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
+import { useRef, useState } from "react";
 import * as THREE from "three";
-import { proxy, useSnapshot } from "valtio";
+import { proxy } from "valtio";
 import officeLoop from "./resources/office game loop 1.mp3";
 import pingSound from "./resources/ping.mp3";
 import whoo1Sound from "./resources/whoo.mp3";
@@ -59,7 +59,17 @@ export const state = proxy({
     reset: () => (state.count = 0),
   },
 });
-
+const words = [
+  "hello",
+  "world",
+  "typescript",
+  "three",
+  "fiber",
+  "random",
+  "word",
+  "stack",
+  "overflow",
+];
 // Function to generate a random word
 function generateRandomWord() {
   const words = [
@@ -79,9 +89,8 @@ interface Props {
   ready: boolean;
 }
 export default function MiniGame1({ ready }: Props) {
-  const { word1, word2 } = useSnapshot(state);
   const [musicStarted, setMusicStarted] = useState(false);
-
+  const ballRef = useRef<RapierRigidBody>(null)
   const startAudio = async () => {
     try {
       if (!musicStarted) {
@@ -120,19 +129,19 @@ export default function MiniGame1({ ready }: Props) {
         />
 
         <Physics gravity={[0, -20, 10]} timeStep="vary">
-          {ready && <Ball position={[0, 5, 0]} />}
+          {ready && <Ball ref={ballRef} position={[0, 5, 0]} />}
           <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} />
           <WordItem
             color="orange"
             position={new THREE.Vector3(2.75, 1.5, 0)}
-            inText={word1}
+            words={words}
             boxId={1}
             posScale={5}
           />
           <WordItem
             color="hotpink"
             position={new THREE.Vector3(-2.75, 3.5, 0)}
-            inText={word2}
+            words={words}
             boxId={2}
             posScale={-2}
           />
