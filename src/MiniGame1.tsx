@@ -10,7 +10,8 @@ import pingSound from "./resources/ping.mp3";
 import whoo1Sound from "./resources/whoo.mp3";
 import whoo2Sound from "./resources/whoo2.mp3";
 
-import { OfficeScene } from "./components/OfficeScene";
+// import { OfficeScene } from "./components/OfficeScene";
+import { OfficeSceneWithPeople } from "./components/OfficeSceneWithPeople";
 import bg from "./resources/bg.jpg";
 import { Ball } from "./components/Ball";
 import { WordItem } from "./components/WordItem";
@@ -130,7 +131,8 @@ export default function MiniGame1({ ready }: Props) {
 
         <Physics gravity={[0, -20, 10]} timeStep="vary">
           {ready && <Ball ref={ballRef} position={[0, 5, 0]} />}
-          <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} />
+          {/* <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} /> */}
+          <OfficeSceneWithPeople scale={[6, 6, 6]} position={[5, -5, 20]} />
           <WordItem
             color="orange"
             position={new THREE.Vector3(2.75, 1.5, 0)}

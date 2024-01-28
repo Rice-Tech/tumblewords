@@ -28,6 +28,7 @@ const PlayGame = () => {
     index: number
   ) => {
     const newWordInputs = [...contextWords];
+    console.log("newWordsInputs: " + newWordInputs);
     newWordInputs.filter((item) => {
       return item.index == index;
     })[0].word = e.target.value;
@@ -38,6 +39,7 @@ const PlayGame = () => {
       if (!assignedWord.refPath) {
         return;
       }
+
       setDoc(
         doc(db, assignedWord.refPath),
         {
