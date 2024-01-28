@@ -14,6 +14,7 @@ import {
 import { useGatherWords } from "@/contexts/GatherWordsContext";
 import MiniGame1 from "@/MiniGame1";
 
+
 const PlayGame = () => {
   const params = useParams();
   const [status, setStatus] = useState("collectwords");

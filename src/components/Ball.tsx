@@ -5,10 +5,12 @@ import { useRef } from "react";
 import { state } from "@/MiniGame1";
 import logo from "../resources/crossp.jpg";
 
+
 type Props = {
   [key: string]: any;
 };
 export function Ball(props: Props) {
+  
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const map = useTexture(logo);
 
