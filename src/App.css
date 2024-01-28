@@ -1,76 +1,82 @@
 .content {
-    background: none;
-    border-radius: 3px;
-    overflow-y: auto;
-    padding: 0;
-    font-size: 10px;
-  }
-  .filledWord {
-    position: relative;
-    color: green;
-    text-decoration: underline;
+  background: none;
+  border-radius: 3px;
+  overflow-y: auto;
+  padding: 0;
+  font-size: 10px;
+}
+.filledWord {
+  position: relative;
+  color: green;
+  text-decoration: underline;
+  color: rgba(0, 0, 0, 0);
+  scale: 1 1;
+  display: inline-block;
+  transition: 400ms ease-in-out;
+}
+@keyframes textEnter {
+  from {
     color: rgba(0, 0, 0, 0);
-    scale: 1 1;
-    display: inline-block;
-    transition: 400ms ease-in-out;
+    transform: translate(0px, -50px) rotate(-180deg);
   }
-  @keyframes textEnter {
-    from {
-      color: rgba(0, 0, 0, 0);
-      transform: translate(0px, -50px) rotate(-180deg);
-    }
-    to {
-      color: rgba(0, 0, 0, 1);
-      transform: translate(0px, 0px) rotate(0deg);
-    }
+  to {
+    color: rgba(0, 0, 0, 1);
+    transform: translate(0px, 0px) rotate(0deg);
   }
-  @keyframes textRepeat {
-    0% {
-      scale: 1.03 0.97;
-    }
-    100% {
-      scale: 0.97 1.3;
-    }
+}
+@keyframes textRepeat {
+  0% {
+    scale: 1.03 0.97;
   }
-  .filledWord:hover {
-    scale: 1.3;
-    background-color: white;
+  100% {
+    scale: 0.97 1.3;
   }
-  .filledWord.hiddenWord {
-    color: rgba(0, 0, 0, 0);
-    rotate: 360deg;
-  }
-  .filledWord.revealedWord {
-    color: red;
-    animation: textRepeat 200ms ease-in-out infinite alternate;
-    rotate: 0deg;
-  }
-  
-  .storyTemplate {
-    color: black;
+}
+.filledWord:hover {
+  scale: 1.3;
+  background-color: white;
+}
+.filledWord.hiddenWord {
+  color: rgba(0, 0, 0, 0);
+  rotate: 360deg;
+}
+.filledWord.revealedWord {
+  color: red;
+  animation: textRepeat 200ms ease-in-out infinite alternate;
+  rotate: 0deg;
+}
+
+.storyTemplate {
+  color: black;
+  scale: 0;
+  animation: templateEntry 3s forwards;
+}
+@keyframes templateEntry {
+  0% {
     scale: 0;
-    animation: templateEntry 3s forwards;
   }
-  @keyframes templateEntry {
-    0% {
-      scale: 0;
-    }
-    100% {
-      scale: 1;
-    }
+  100% {
+    scale: 1;
   }
-  
-  .filledWord:hover .posTooltip {
-    display: block;
-    background-color: white;
-  }
-  .posTooltip {
-    position: absolute;
-    top: -110%;
-    display: none;
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0);
-    transition: 200ms ease-in-out;
-    border: 2px solid black;
-  }
-  
+}
+
+.filledWord:hover .posTooltip {
+  display: block;
+  background-color: white;
+}
+.posTooltip {
+  position: absolute;
+  top: -110%;
+  display: none;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  transition: 200ms ease-in-out;
+  border: 2px solid black;
+}
+.onTop {
+  z-index: 1000000;
+  position: fixed;
+
+top:0;
+right:0;
+}
