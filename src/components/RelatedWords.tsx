@@ -87,10 +87,11 @@ const RelatedWords = () => {
         Words related to{" "}
         <select onChange={(event) => setDMOption(event.target.value)}>
           {dataMuseOptions.map((option) => (
-            <option value={option.code}>{option.desc}</option>
+            <option value={option.code} key={option.code}>
+              {option.desc}
+            </option>
           ))}
         </select>{" "}
-        
         <Input
           type="text"
           placeholder="Topic Word"
@@ -99,10 +100,10 @@ const RelatedWords = () => {
         along with their parts of speech:
       </h2>
       <Input
-          type="text"
-          placeholder="First letters"
-          onChange={(event) => setFirstLetters(event.target.value)}
-        />
+        type="text"
+        placeholder="First letters"
+        onChange={(event) => setFirstLetters(event.target.value)}
+      />
       <ul>
         {words.length > 0 &&
           words.map((word, index) => (
