@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { useCallback, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Text, useGLTF, useTexture } from "@react-three/drei";
+import { Text, useGLTF, useTexture, Decal } from "@react-three/drei";
 import {
   Physics,
   RigidBody,
@@ -21,6 +21,7 @@ import officeLoop from "./resources/office game loop 1.mp3";
 
 import logo from "./resources/crossp.jpg";
 import bg from "./resources/bg.jpg";
+import candle from "./resources/candle.jpg";
 
 const officeBackground = new Audio(officeLoop);
 const whoo1 = new Audio(whoo1Sound);
@@ -296,6 +297,7 @@ function Bg() {
 
 function Enemy({ position, color, inText, boxId, posScale }) {
   const api = useRef();
+  const aCandle = useTexture(candle);
 
   // const modelEnemy1 = useRef();
   // const modelEnemy2 = useRef();
@@ -345,6 +347,13 @@ function Enemy({ position, color, inText, boxId, posScale }) {
           fontSize={0.6}
           children={inText}
           color={"red"}
+        />
+        <Decal
+          position={[-0.7, 0.55, 0.3]}
+          rotation={[1, 0, Math.PI]}
+          scale={0.2}
+          map={aCandle}
+          map-anisotropy={16}
         />
         <boxGeometry args={[2.5, 1, 1]} />
         <meshStandardMaterial color={color} />
