@@ -11,18 +11,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  useGatherWords,
-} from "@/contexts/GatherWordsContext";
+import { useGatherWords } from "@/contexts/GatherWordsContext";
+import MiniGame1 from "@/MiniGame1";
 
 const PlayGame = () => {
   const params = useParams();
   const [status, setStatus] = useState("collectwords");
   const { contextWords, setContextWords } = useGatherWords();
-  useEffect(()=>{
-    console.log("contextWords changed")
-    console.table(contextWords)
-  },[contextWords])
+  useEffect(() => {
+    console.log("contextWords changed");
+    console.table(contextWords);
+  }, [contextWords]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -58,15 +57,13 @@ const PlayGame = () => {
           <CardDescription>ID: {params.gameId}</CardDescription>
         </CardHeader>
         <CardContent>
-              <WordInputs
-                wordsList={contextWords}
-                onChange={handleInputChange}
-              />
-              <Button onClick={handleSubmitWords}>
-                {status == "submitted" ? "Resubmit" : "Submit words"}
-              </Button>
+          <WordInputs wordsList={contextWords} onChange={handleInputChange} />
+          <Button onClick={handleSubmitWords}>
+            {status == "submitted" ? "Resubmit" : "Submit words"}
+          </Button>
         </CardContent>
       </Card>
+      <MiniGame1 ready={true}></MiniGame1>
     </div>
   );
 };

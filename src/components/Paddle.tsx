@@ -12,11 +12,13 @@ import * as THREE from "three";
 import { useSnapshot } from "valtio";
 import { state } from "@/MiniGame1";
 import { PingPong } from "./Pingpong";
+import { useGatherWords } from "../contexts/GatherWordsContext";
 
 export function Paddle({
   vec = new THREE.Vector3(),
   dir = new THREE.Vector3(),
 }) {
+  const { contextWords } = useGatherWords();
   const api = useRef<RapierRigidBody>(null);
   const model = useRef<THREE.Group>(null);
   const { count } = useSnapshot(state);
@@ -68,10 +70,12 @@ export function Paddle({
           anchorX="center"
           anchorY="middle"
           rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, 1, 0]}
-          fontSize={10}
-          children={count}
-        />
+          position={[-3, 1, 0]}
+          fontSize={5}
+        > 
+        {count+"\n"}
+          {contextWords.map((word, index) => `${index}) ${word.word}`).join("\n")}
+        </Text>
         <group rotation={[0, -0.04, 0]} scale={1}>
           <PingPong></PingPong>
         </group>
