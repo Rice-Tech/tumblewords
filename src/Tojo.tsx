@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Text, useGLTF, useTexture } from "@react-three/drei";
 import {
@@ -12,7 +12,11 @@ import {
 import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
 import { proxy, useSnapshot } from "valtio";
 import { easing } from "maath";
-
+// import AudioPlayer from "react-h5-audio-player";
+// import "react-h5-audio-player/lib/styles.css";
+// import 'react-h5-audio-player/lib/styles.less' Use LESS
+// import 'react-h5-audio-player/src/styles.scss' Use SASS
+import useSound from "use-sound";
 import pingSound from "./resources/ping.mp3";
 import whoo1Sound from "./resources/whoo.mp3";
 import whoo2Sound from "./resources/whoo2.mp3";
@@ -20,11 +24,21 @@ import officeLoop from "./resources/office game loop 1.mp3";
 
 import logo from "./resources/crossp.jpg";
 import bg from "./resources/bg.jpg";
+import { OfficeScene } from "./components/OfficeScene";
 
 const officeBackground = new Audio(officeLoop);
 const whoo1 = new Audio(whoo1Sound);
 const whoo2 = new Audio(whoo2Sound);
 const ping = new Audio(pingSound);
+
+const Player = () => (
+  <AudioPlayer
+    autoPlay
+    src="http://example.com/audio.mp3"
+    onPlay={(e) => console.log("onPlay")}
+    // other props here
+  />
+);
 
 export function clamp(value: number, min: number, max: number) {
   console.log(value, min, max);
@@ -86,8 +100,29 @@ interface Props {
 }
 export default function Tojo({ ready }: Props) {
   const { word1, word2 } = useSnapshot(state);
-  officeBackground.loop = true;
-  ready && officeBackground.play();
+  const [musicStarted, setMusicStarted] = useState(false);
+
+  const recursiveStartAudio = async () => {
+    try {
+      if (!musicStarted) {
+        officeBackground.loop = true;
+        await officeBackground.play();
+        console.log("aw yeah!!!");
+        setMusicStarted(true);
+      }
+    } catch {
+      console.log("Let me play music!!!");
+      setTimeout(recursiveStartAudio, 1000);
+    }
+  };
+
+  useEffect(() => {
+    recursiveStartAudio();
+  }, []);
+
+  //   officeBackground.loop = true;
+  // ready && officeBackground.play();
+  
   return (
     <>
       <Canvas
@@ -109,6 +144,7 @@ export default function Tojo({ ready }: Props) {
           shadow-mapSize={1024}
           shadow-bias={-0.0001}
         />
+        <OfficeScene scale={[6, 6, 6]} position={[0, -5, 20]} />
         <Physics gravity={[0, -20, 10]} timeStep="vary">
           {ready && <Ball position={[0, 5, 0]} />}
           <Enemy
