@@ -74,7 +74,7 @@ export function Paddle({
           fontSize={5}
         > 
         {count+"\n"}
-          {contextWords.map((word, index) => `${index}) ${word.word}`).join("\n")}
+          {contextWords.map((word, index) => `${index+1}) ${word.word}`).join("\n")}
         </Text>
         <group rotation={[0, -0.04, 0]} scale={1}>
           <PingPong></PingPong>
