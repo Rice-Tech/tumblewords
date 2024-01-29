@@ -67,7 +67,7 @@ const PlayGame = () => {
       </Card>
       <MiniGame1 ready={true}></MiniGame1>
 
-      <Button className=" fixed onTop" onClick={handleSubmitWords}>
+      <Button className=" right-2 top-4 fixed onTop" onClick={handleSubmitWords}>
         {status == "submitted" ? "Resubmit" : "Submit words"}
       </Button>
     </div>
