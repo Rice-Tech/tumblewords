@@ -52,7 +52,7 @@ const HostGame = () => {
 
     const watchWords = () => {
       const ref = `rooms/${params.gameId}/words`;
-      const q = query(collection(db, ref), where("word", "!=", ""));
+      const q = query(collection(db, ref));
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const wordSnaps: WordInput[] = [];
         querySnapshot.forEach((doc) => {

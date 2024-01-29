@@ -21,6 +21,7 @@
     "@types/three": "^0.160.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel-react": "^8.0.0-rc21",
     "firebase": "^10.7.2",
     "lucide-react": "^0.316.0",
     "naughty-words": "^1.2.0",
