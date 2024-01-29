@@ -2,7 +2,7 @@ import { Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import {
   ContactForcePayload,
-  CylinderCollider,
+  CuboidCollider,
   RapierRigidBody,
   RigidBody,
 } from "@react-three/rapier";
@@ -11,9 +11,8 @@ import { useCallback, useRef } from "react";
 import * as THREE from "three";
 import { useSnapshot } from "valtio";
 import { state } from "@/MiniGame1";
-import { PingPong } from "./Pingpong";
 import { useGatherWords } from "../contexts/GatherWordsContext";
-//import { ClipboardModel } from "./Clipboard";
+import { Clipboard2 } from "./Clipboard2";
 
 export function Paddle({
   vec = new THREE.Vector3(),
@@ -65,14 +64,15 @@ export function Paddle({
       colliders={false}
       onContactForce={contactForce}
     >
-      <CylinderCollider args={[0.15, 1.75]} />
+      <CuboidCollider args={[2.3,0.5,3]} position={[0,-0.3,0]} />
       <group ref={model} position={[0, 2, 0]} scale={0.15}>
         <Text
           anchorX="center"
           anchorY="middle"
           rotation={[-Math.PI / 2, 0, 0]}
-          position={[-3, 1, 0]}
+          position={[-1, 1, 0]}
           fontSize={5}
+          color={"black"}
         >
           {count + "\n"}
           {contextWords
@@ -80,8 +80,7 @@ export function Paddle({
             .join("\n")}
         </Text>
         <group rotation={[0, -0.04, 0]} scale={1}>
-          <PingPong></PingPong>
-          {/* <ClipboardModel /> */}
+          <Clipboard2 position={[0,0,0]}/>
         </group>
       </group>
     </RigidBody>

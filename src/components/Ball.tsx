@@ -19,7 +19,7 @@ export function Ball(props: Props) {
       return;
     }
     const ball = rigidBodyRef.current;
-    if (ball.translation().y < -3) {
+    if (ball.translation().y < -4.6) {
       rigidBodyRef.current.setTranslation({ x: 0, y: 5, z: 0 }, true);
       rigidBodyRef.current.setLinvel({ x: 0, y: 5, z: 0 }, true);
       state.api.reset();
