@@ -5,6 +5,7 @@ import Root from "./routes/Root";
 import "./index.css";
 import ErrorPage from "./error-page";
 import Home from "./routes/Home";
+import Demos from "./routes/Demos";
 import About from "./routes/About";
 import HostGame from "./routes/HostGame";
 import PlayGame from "./routes/PlayGame";
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/about",
         element: <About />,
+      },
+      {
+        path: "/demos",
+        element: <Demos />,
       },
       {
         path: "/game/:gameId",

@@ -33,6 +33,11 @@ const Root = () => {
                 Mini Game
               </Link>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link to={"/demos"} className={navigationMenuTriggerStyle()}>
+                Demos
+              </Link>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
