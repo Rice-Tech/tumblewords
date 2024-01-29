@@ -18,11 +18,11 @@ interface WordItemProps {
 }
 import words from "../assets/words.json";
 import { WordInput } from "./StoryEngine";
-
+import { useFrame } from "@react-three/fiber";
 
 export function WordItem({ position, color, boxId }: WordItemProps) {
   const { contextWords, setContextWords } = useGatherWords();
-  const api = useRef<RapierRigidBody>(null);
+  const rigidBodyRef = useRef<RapierRigidBody>(null);
   const [wordIndex, setWordIndex] = useState(0);
   const contactForce = useCallback(() => {
     if (boxId === 1) {
@@ -49,27 +49,29 @@ export function WordItem({ position, color, boxId }: WordItemProps) {
       if (matchingPOS.length > 0) {
         if (matchingPOS.length == 1) {
           newWord.index = matchingPOS[0].index;
-          newWord.refPath = matchingPOS[0].refPath
+          newWord.refPath = matchingPOS[0].refPath;
           newWord.user = matchingPOS[0].user;
           newWord.status = matchingPOS[0].status;
-        } 
-        else {
+        } else {
           const noWord = matchingPOS.filter((item) => !item.word);
           if (noWord.length > 0) {
             newWord.index = noWord[0].index;
-            newWord.refPath = noWord[0].refPath
+            newWord.refPath = noWord[0].refPath;
             newWord.user = noWord[0].user;
             newWord.status = noWord[0].status;
           } else {
             const randomIndex = Math.floor(Math.random() * matchingPOS.length);
             newWord.index = matchingPOS[randomIndex].index;
-            newWord.refPath = matchingPOS[randomIndex].refPath
+            newWord.refPath = matchingPOS[randomIndex].refPath;
             newWord.user = matchingPOS[randomIndex].user;
             newWord.status = matchingPOS[randomIndex].status;
           }
         }
-        
-        setContextWords([...contextWords.filter((item) => item.index != newWord.index), newWord]);
+
+        setContextWords([
+          ...contextWords.filter((item) => item.index != newWord.index),
+          newWord,
+        ]);
       }
       setWordIndex((wordIndex + 1) % words.length);
       console.log("Ball");
@@ -77,6 +79,33 @@ export function WordItem({ position, color, boxId }: WordItemProps) {
       console.log("Something else");
     }
   };
+
+  useFrame((state) => {
+    const camera = state.camera;
+    state.camera.updateMatrix();
+    const frustum = new THREE.Frustum();
+    const matrix = new THREE.Matrix4().multiplyMatrices(
+      camera.projectionMatrix,
+      camera.matrixWorldInverse
+    );
+    frustum.setFromProjectionMatrix(matrix);
+    const wordRB = rigidBodyRef.current;
+    if (!wordRB) {
+      return;
+    }
+    const pos = wordRB.translation() as THREE.Vector3;
+    if (!frustum.containsPoint(pos)) {
+      console.log("Out of view");
+
+      const reset = () => {
+        wordRB.setLinvel(new THREE.Vector3(0, 0, 0), true);
+        wordRB.setAngvel(new THREE.Vector3(0, 0, 0), true);
+        wordRB.setTranslation(position, true);
+        wordRB.setRotation(new THREE.Vector4(), true);
+      };
+      setTimeout(reset, 1000);
+    }
+  });
   return (
     <RigidBody
       colliders="cuboid"
@@ -85,10 +114,11 @@ export function WordItem({ position, color, boxId }: WordItemProps) {
       restitution={2.1}
       ccd
       canSleep={false}
-      ref={api}
+      ref={rigidBodyRef}
       onContactForce={contactForce}
       onCollisionEnter={handleCollision}
       position={position}
+      mass={50}
     >
       <mesh>
         <Text

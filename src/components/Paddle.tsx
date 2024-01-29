@@ -64,19 +64,19 @@ export function Paddle({
       colliders={false}
       onContactForce={contactForce}
     >
-      <CuboidCollider args={[2.3,0.5,3]} position={[0,-0.3,0]} />
+      <CuboidCollider args={[2.3,0.5,3]} position={[0,-0.3,0]} restitution={0.7}/>
       <group ref={model} position={[0, 2, 0]} scale={0.15}>
         <Text
           anchorX="center"
           anchorY="middle"
           rotation={[-Math.PI / 2, 0, 0]}
           position={[-1, 1, 0]}
-          fontSize={5}
+          fontSize={4}
           color={"black"}
         >
           {count + "\n"}
           {contextWords
-            .map((word, index) => `${index + 1}) ${word.word}`)
+            .map((word, index) => `${index + 1}) ${word.word||word.partOfSpeech}`)
             .join("\n")}
         </Text>
         <group rotation={[0, -0.04, 0]} scale={1}>
