@@ -90,7 +90,7 @@ const HostGame = () => {
 
     const updateRoomStatus = async (newRoomStatus: string) => {
       const ref = `rooms/${params.gameId}`;
-      const roomDoc = await setDoc(
+      setDoc(
         doc(db, ref),
         {
           status: newRoomStatus,
@@ -98,7 +98,6 @@ const HostGame = () => {
         },
         { merge: true }
       );
-      console.log(roomDoc);
     };
 
     updateRoomStatus("play");
@@ -111,7 +110,6 @@ const HostGame = () => {
     const ref = `rooms/${params.gameId}/words`;
     newWordsList.forEach((wordInput, index) => {
       const assignedUser = users[index % users.length];
-      console.log(wordInput.word, index)
       addDoc(collection(db, ref), {
         word: wordInput.word,
         partOfSpeech: wordInput.partOfSpeech,

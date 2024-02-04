@@ -42,10 +42,6 @@ export const GatherWordsProvider = ({ children }: Props) => {
   const { currentUser } = useAuth();
   const params = useParams();
   useEffect(() => {
-    console.log("contextWords changed");
-    console.table(contextWords);
-  }, [contextWords]);
-  useEffect(() => {
     if (!currentUser) {
       console.log(
         "You must be logged in to play a game or at least have a valid session."
@@ -55,7 +51,7 @@ export const GatherWordsProvider = ({ children }: Props) => {
     const uid = currentUser.uid;
     const joinRoom = () => {
       const ref = `rooms/${params.gameId}/users/${uid}`;
-      console.log(ref);
+
       setDoc(doc(db, ref), {
         uid: uid,
         timeJoined: new Date().getTime(),
@@ -78,13 +74,8 @@ export const GatherWordsProvider = ({ children }: Props) => {
             user: data.user,
           });
         });
-        console.log("ContextWOrds");
-        console.table(contextWords);
-        setContextWords((prev) => {
-          console.log(prev);
-          console.log(wordSnaps);
-          return wordSnaps;
-        });
+
+        setContextWords(wordSnaps);
       });
 
       return unsubscribe;

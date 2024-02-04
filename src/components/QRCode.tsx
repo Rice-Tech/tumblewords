@@ -3,8 +3,9 @@ import QRCodeStyling from "qr-code-styling";
 import { Button } from "./ui/button";
 
 const qrCode = new QRCodeStyling({
-  width: 300,
-  height: 300,
+  width: 500,
+  height: 500,
+  type: "svg",
   image: "../Logo.svg",
   dotsOptions: {
     color: "#slate",
@@ -12,7 +13,7 @@ const qrCode = new QRCodeStyling({
   },
   imageOptions: {
     crossOrigin: "anonymous",
-    margin: 20,
+    margin: 5,
   },
 });
 
@@ -21,20 +22,30 @@ interface Props {
 }
 export default function QRCode({ url }: Props) {
   const ref = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
-    qrCode.append(ref.current);
-    const codeCanvas = ref.current.querySelector("canvas");
-    if (!codeCanvas) {
-      console.log("No Canvas");
-      return;
-    }
-    codeCanvas.setAttribute("width", "");
-    codeCanvas.setAttribute("height", "");
-    codeCanvas.setAttribute("class", "w-full");
+    const createQR = () => {
+      if (!ref.current) {
+        return;
+      }
+      qrCode.append(ref.current);
+      setTimeout(() => appendQR(), 100);
+    };
+    const appendQR = () => {
+      if (!ref.current) {
+        return;
+      }
+      const qrCodeSVG = ref.current.querySelector("svg");
+
+      if (qrCodeSVG) {
+        qrCodeSVG.setAttribute("viewBox", "0 0 500 500");
+        qrCodeSVG.setAttribute("width", "100%");
+        qrCodeSVG.setAttribute("height", "100%");
+      }
+    };
+
+    createQR();
   }, []);
 
   useEffect(() => {
@@ -47,11 +58,12 @@ export default function QRCode({ url }: Props) {
     <div className="m-auto flex-col justify-around">
       <Button className=" m-auto">
         <a className=" min-w-0" target="_blank" href={url}>
-          {url}
+          Click to play
         </a>
       </Button>
-
-      <div className=" flex justify-around w-full" ref={ref} />
+      <div className=" max-w-80 svgParent" ref={ref2}>
+        <div className=" flex justify-around w-full svgDump " ref={ref} />
+      </div>
     </div>
   );
 }

@@ -74,9 +74,6 @@ export function WordItem({ position, color, boxId }: WordItemProps) {
         ]);
       }
       setWordIndex((wordIndex + 1) % words.length);
-      console.log("Ball");
-    } else {
-      console.log("Something else");
     }
   };
 
@@ -95,8 +92,6 @@ export function WordItem({ position, color, boxId }: WordItemProps) {
     }
     const pos = wordRB.translation() as THREE.Vector3;
     if (!frustum.containsPoint(pos)) {
-      console.log("Out of view");
-
       const reset = () => {
         wordRB.setLinvel(new THREE.Vector3(0, 0, 0), true);
         wordRB.setAngvel(new THREE.Vector3(0, 0, 0), true);

@@ -64,7 +64,6 @@ const RelatedWords = () => {
       const fetchRequest = `https://api.datamuse.com/words?${
         firstLetters ? "sp=" + firstLetters + "*" : ""
       }&${dmOption}=${topicWord}&max=20&md=p`;
-      console.log(fetchRequest);
       const response = await fetch(fetchRequest);
       if (!response.ok) {
         throw new Error("Failed to fetch data");

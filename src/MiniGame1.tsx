@@ -1,8 +1,8 @@
 import { Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
-import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { useRef, useState } from "react";
+import { Physics, RigidBody } from "@react-three/rapier";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { proxy } from "valtio";
 import officeLoop from "./resources/office game loop 1.mp3";
@@ -91,77 +91,92 @@ interface Props {
 }
 export default function MiniGame1({ ready }: Props) {
   const [musicStarted, setMusicStarted] = useState(false);
-  const ballRef = useRef<RapierRigidBody>(null)
+  const canvasRef = useRef<HTMLDivElement>(null);
   const startAudio = async () => {
     try {
       if (!musicStarted) {
         officeBackground.loop = true;
         await officeBackground.play();
-        console.log("aw yeah!!!");
         setMusicStarted(true);
       }
-    } catch {
-      console.log("Let me play music!!!");
-    }
+    } catch {}
   };
 
   startAudio();
 
+  useEffect(() => {
+    if (!canvasRef.current) {
+      console.log("No Div to make fullscreen");
+      return;
+    }
+
+    console.log(canvasRef.current.requestFullscreen());
+  }, [canvasRef]);
   return (
     <>
-      <Canvas
-        style={{ width: "100%", height: "100vh" }}
-        shadows
-        dpr={[1, 1.5]}
-        gl={{ antialias: false }}
-        camera={{ position: [0, 5, 12], fov: 45 }}
-      >
-        <color attach="background" args={["#f0f0f0"]} />
-        <ambientLight intensity={0.5 * Math.PI} />
-        <spotLight
-          decay={0}
-          position={[-10, 15, -5]}
-          angle={1}
-          penumbra={1}
-          intensity={2}
-          castShadow
-          shadow-mapSize={1024}
-          shadow-bias={-0.0001}
-        />
+      <div ref={canvasRef}>
+        <Canvas
+          style={{ width: "100%", height: "100vh" }}
+          shadows
+          dpr={[1, 1.5]}
+          gl={{ antialias: false }}
+          camera={{ position: [0, 5, 12], fov: 45 }}
+        >
+          <color attach="background" args={["#f0f0f0"]} />
+          <ambientLight intensity={0.5 * Math.PI} />
+          <spotLight
+            decay={0}
+            position={[-10, 15, -5]}
+            angle={1}
+            penumbra={1}
+            intensity={2}
+            castShadow
+            shadow-mapSize={1024}
+            shadow-bias={-0.0001}
+          />
 
-        <Physics gravity={[0, -20, 10]} timeStep="vary">
-          {ready && <Ball ref={ballRef} position={[0, 5, 0]} />}
-          {/* <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} /> */}
-          <OfficeSceneWithPeople scale={[6, 6, 6]} position={[5, -5, 20]} />
-          <WordItem
-            color="orange"
-            position={new THREE.Vector3(2.75, 1.5, 0)}
-            words={words}
-            boxId={1}
-            posScale={5}
-          />
-          <WordItem
-            color="hotpink"
-            position={new THREE.Vector3(-2.75, 3.5, 0)}
-            words={words}
-            boxId={2}
-            posScale={-2}
-          />
-          <Paddle />
-          <RigidBody type="fixed">
-            <Plane position={[0, -5.1, 0]} scale={100} rotation={[-Math.PI / 2, 0, 0]} />
-          </RigidBody>
-          <RigidBody type="fixed">
-            <Plane position={[0, 10, 0]} scale={100} rotation={[Math.PI / 2, 0, 0]} />
-          </RigidBody>
-        </Physics>
-        <EffectComposer disableNormalPass>
-          <N8AO aoRadius={0.5} intensity={2} />
-          {/* <TiltShift2 blur={0.2} /> */}
-          <ToneMapping />
-        </EffectComposer>
-        <Bg />
-      </Canvas>
+          <Physics gravity={[0, -20, 10]} timeStep="vary">
+            {ready && <Ball position={[0, 5, 0]} />}
+            {/* <OfficeScene scale={[6, 6, 6]} position={[5, -5, 20]} /> */}
+            <OfficeSceneWithPeople scale={[6, 6, 6]} position={[5, -5, 20]} />
+            <WordItem
+              color="orange"
+              position={new THREE.Vector3(2.75, 1.5, 0)}
+              words={words}
+              boxId={1}
+              posScale={5}
+            />
+            <WordItem
+              color="hotpink"
+              position={new THREE.Vector3(-2.75, 3.5, 0)}
+              words={words}
+              boxId={2}
+              posScale={-2}
+            />
+            <Paddle />
+            <RigidBody type="fixed">
+              <Plane
+                position={[0, -5.1, 0]}
+                scale={100}
+                rotation={[-Math.PI / 2, 0, 0]}
+              />
+            </RigidBody>
+            <RigidBody type="fixed">
+              <Plane
+                position={[0, 10, 0]}
+                scale={100}
+                rotation={[Math.PI / 2, 0, 0]}
+              />
+            </RigidBody>
+          </Physics>
+          <EffectComposer disableNormalPass>
+            <N8AO aoRadius={0.5} intensity={2} />
+            {/* <TiltShift2 blur={0.2} /> */}
+            <ToneMapping />
+          </EffectComposer>
+          <Bg />
+        </Canvas>
+      </div>
     </>
   );
 }
