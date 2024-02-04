@@ -2,7 +2,7 @@ import { Plane, useTexture } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
 import { Physics, RigidBody } from "@react-three/rapier";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import * as THREE from "three";
 import { proxy } from "valtio";
 import officeLoop from "./resources/office game loop 1.mp3";
@@ -104,19 +104,19 @@ export default function MiniGame1({ ready }: Props) {
 
   startAudio();
 
-  useEffect(() => {
-    if (!canvasRef.current) {
-      console.log("No Div to make fullscreen");
-      return;
-    }
+  // useEffect(() => {
+  //   if (!canvasRef.current) {
+  //     console.log("No Div to make fullscreen");
+  //     return;
+  //   }
 
-    try {
-      canvasRef.current.requestFullscreen();
-    } catch {
-      const element = canvasRef.current as any;
-      if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
-    }
-  }, [canvasRef]);
+  //   try {
+  //     canvasRef.current.requestFullscreen();
+  //   } catch {
+  //     const element = canvasRef.current as any;
+  //     if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+  //   }
+  // }, [canvasRef]);
   return (
     <>
       <div ref={canvasRef}>

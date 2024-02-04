@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const teamData = [
   {
@@ -42,20 +48,19 @@ const teamData = [
 
 const About = () => {
   return (
-    <div>
-      About
-      {teamData.map((member) => (
-        <Card className=" w-2/3">
-          <CardHeader>
-            <CardTitle>{member.name}</CardTitle>
-            <CardDescription>{member.role}</CardDescription>
-            
-          </CardHeader>
-          <CardContent>
-            Contributions: {member.contributions}
-          </CardContent>
-        </Card>
-      ))}
+    <div className=" h-screen overflow-auto relative">
+      <div>
+        About
+        {teamData.map((member) => (
+          <Card className=" w-2/3">
+            <CardHeader>
+              <CardTitle>{member.name}</CardTitle>
+              <CardDescription>{member.role}</CardDescription>
+            </CardHeader>
+            <CardContent>Contributions: {member.contributions}</CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 };
