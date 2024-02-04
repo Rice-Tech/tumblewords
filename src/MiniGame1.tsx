@@ -110,7 +110,12 @@ export default function MiniGame1({ ready }: Props) {
       return;
     }
 
-    console.log(canvasRef.current.requestFullscreen());
+    try {
+      canvasRef.current.requestFullscreen();
+    } catch {
+      const element = canvasRef.current as any;
+      if (element.webkitRequestFullscreen) element.webkitRequestFullscreen();
+    }
   }, [canvasRef]);
   return (
     <>
