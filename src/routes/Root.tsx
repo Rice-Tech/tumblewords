@@ -15,7 +15,7 @@ const Root = () => {
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link to={"/"} className={navigationMenuTriggerStyle()}>
-                <img src="Logo.svg" alt="Tumblewords Logo" width="30px"></img>
+                <img src="./Logo.svg" alt="Tumblewords Logo" width="30px"></img>
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
