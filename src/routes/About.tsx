@@ -27,13 +27,13 @@ const teamData = [
     links: "",
   },
   {
-    name: "Tojo",
+    name: "Tojo Rabemananjara",
     role: "Coding Team",
     contributions: "Collaborated on 3D game",
     links: "",
   },
   {
-    name: "Joel",
+    name: "Joel Landy",
     role: "Art Team",
     contributions: "2D Art",
     links: "",
